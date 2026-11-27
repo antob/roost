@@ -987,8 +987,9 @@ fn sh_quote(s: &str) -> String {
 /// The roost a session should run: `roost` when it's on PATH, else this binary, plus the env that picks this
 /// identity. A global install leaves ROOST_AGENT out, so each project keeps its own identity.
 fn session_roost(global: bool) -> (String, Vec<(&'static str, String)>) {
+    // A global install follows each session's environment, so a shell can point it at another config.
     let vars: &[&'static str] = if global {
-        &["XDG_CONFIG_HOME"]
+        &[]
     } else {
         &["ROOST_AGENT", "XDG_CONFIG_HOME"]
     };

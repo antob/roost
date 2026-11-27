@@ -415,6 +415,7 @@ async fn skill_and_session_integration_install_globally() {
         !command.contains("ROOST_AGENT"),
         "a global hook keeps each project's identity: {command}"
     );
+    assert!(!command.contains("XDG_CONFIG_HOME"), "{command}");
 
     assert!(
         run(&["hook", "install", "--target", "pi", "--global"])
@@ -432,6 +433,7 @@ async fn skill_and_session_integration_install_globally() {
         "{config}"
     );
     assert!(!config.contains("ROOST_AGENT"), "{config}");
+    assert!(!config.contains("XDG_CONFIG_HOME"), "{config}");
 
     let project = run(&["hook", "install", "--target", "pi"]).await;
     assert!(String::from_utf8_lossy(&project.stderr).contains("Pi would load both"));
