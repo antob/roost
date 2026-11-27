@@ -148,10 +148,14 @@ async function loadChannels() {
 
 type Tab = "home" | "channels" | "settings";
 
+/// Set by a server started with `--instance`, so a second roost (like dev) is never mistaken for the real one.
+const instance = document.querySelector<HTMLMetaElement>('meta[name="roost-instance"]')?.content ?? null;
+
 function largePage(opts: { title: string; subtitle?: Child; left?: Child; right?: Child; tab: Tab }, ...body: Child[]) {
   const top = h("div", { class: "topbar" }, opts.left ?? h("span"), opts.right ?? h("span"));
+  const title = h("h1", { class: "large" }, opts.title, instance ? h("span", { class: "instance-tag" }, instance) : null);
   app.replaceChildren(
-    h("div", { class: "page has-tabs" }, top, h("h1", { class: "large" }, opts.title), opts.subtitle ? h("p", { class: "lead" }, opts.subtitle) : null, ...body),
+    h("div", { class: "page has-tabs" }, top, title, opts.subtitle ? h("p", { class: "lead" }, opts.subtitle) : null, ...body),
     tabbar(opts.tab),
   );
 }

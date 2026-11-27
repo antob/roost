@@ -50,12 +50,14 @@ To try a change on the iPhone, run a second server from the checkout next to you
 ```sh
 cd web && bun install && bun run build && cd ..
 cargo build
-target/debug/roost --db roost-dev.db serve --bind 0.0.0.0:8787 --base-url https://roost-dev.example.net
+target/debug/roost --db roost-dev.db serve --bind 0.0.0.0:8787 --base-url https://roost-dev.example.net --instance dev
 ```
+
+`--instance dev` names the app "roost dev", gives it an orange icon and puts a DEV tag beside the page titles, so it can't be mistaken for your real roost on the home screen or in a notification.
 
 The phone needs HTTPS for passkeys and Web Push, so put the dev server behind a TLS reverse proxy (or tunnel) at the base URL. Then, once:
 
-1. `target/debug/roost --db roost-dev.db passkey enroll --base-url https://roost-dev.example.net`, open the link in Safari on the iPhone, create the passkey and add the page to the home screen. It's a separate app from your real roost, since it's a different site.
+1. `target/debug/roost --db roost-dev.db passkey enroll --base-url https://roost-dev.example.net`, open the link in Safari on the iPhone, create the passkey and add the page to the home screen. It's a separate app from your real roost, since it's a different site. iOS keeps the name and icon from when the app was added, so add it after starting the server with `--instance`.
 2. In the dev app: Settings → Turn on notifications.
 3. `target/debug/roost --db roost-dev.db channel create Dev` prints a claim code (or use Channels → + in the app).
 

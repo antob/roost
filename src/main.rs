@@ -41,6 +41,9 @@ enum Command {
         /// VAPID `sub` claim, a mailto: or https: URL. Defaults to the base URL.
         #[arg(long, env = "ROOST_VAPID_SUBJECT")]
         vapid_subject: Option<String>,
+        /// Name a second server, like `dev`: its app is "roost dev" with an orange icon, so it can't be mistaken for the real one.
+        #[arg(long, env = "ROOST_INSTANCE", value_parser = instance_name)]
+        instance: Option<String>,
     },
     /// Manage the owner's passkeys.
     Passkey {
@@ -107,6 +110,7 @@ async fn main() -> anyhow::Result<()> {
             timezone,
             vapid_key_file,
             vapid_subject,
+            instance,
         } => {
             let vapid_private_pem = vapid_key_file
                 .map(|f| std::fs::read_to_string(&f).with_context(|| format!("reading {f}")))
@@ -118,6 +122,7 @@ async fn main() -> anyhow::Result<()> {
                 timezone,
                 vapid_private_pem,
                 vapid_subject,
+                instance,
             };
             let listener = tokio::net::TcpListener::bind(&bind)
                 .await
@@ -192,4 +197,11 @@ async fn main() -> anyhow::Result<()> {
         }
     }
     Ok(())
+}
+
+fn instance_name(s: &str) -> Result<String, String> {
+    let ok =
+        !s.is_empty() && s.len() <= 16 && s.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-');
+    ok.then(|| s.to_string())
+        .ok_or_else(|| "use up to 16 letters, digits or dashes".into())
 }

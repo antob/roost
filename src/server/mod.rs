@@ -33,6 +33,8 @@ pub struct Config {
     pub vapid_private_pem: Option<String>,
     /// The VAPID `sub` claim (a mailto: or https: URL).
     pub vapid_subject: Option<String>,
+    /// Marks a second server (say `dev`): the PWA is named "roost <instance>" and wears the orange icon.
+    pub instance: Option<String>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

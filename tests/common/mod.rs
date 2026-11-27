@@ -37,6 +37,7 @@ impl Roost {
             timezone: "Europe/Stockholm".into(),
             vapid_private_pem: None,
             vapid_subject: None,
+            instance: None,
         };
         let state = AppState::new(db.clone(), config).await.unwrap();
         scheduler::spawn(state.clone());
