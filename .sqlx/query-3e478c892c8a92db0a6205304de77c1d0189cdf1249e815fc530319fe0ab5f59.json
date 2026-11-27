@@ -1,0 +1,21 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT MIN(next_fire_at) as \"at: String\" FROM notifications WHERE next_fire_at IS NOT NULL",
+  "describe": {
+    "columns": [
+      {
+        "name": "at: String",
+        "ordinal": 0,
+        "type_info": "Text",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      true
+    ]
+  },
+  "hash": "3e478c892c8a92db0a6205304de77c1d0189cdf1249e815fc530319fe0ab5f59"
+}

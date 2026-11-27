@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET delivered_at = COALESCE(delivered_at, ?) WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "986e1a087eb76c82df1e38771ed51e2c2d148fcb201c513b4b6c1380f03313da"
+}

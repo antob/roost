@@ -1,0 +1,12 @@
+/target
+/.cargo-home/
+/.bun/
+/result
+.direnv/
+node_modules/
+web/dist/
+*.db
+*.db-*
+.env
+.envrc
+.gh/

@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET escalation_state = 'fired_not_pushed', next_fire_at = NULL\n                 WHERE id = ? AND status = 'pending' AND escalation_state = 'armed' AND next_fire_at = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "0b13c8654c624f9a354cbefe3e478d5b20e36ad66d63b00629900a48119ba9e5"
+}

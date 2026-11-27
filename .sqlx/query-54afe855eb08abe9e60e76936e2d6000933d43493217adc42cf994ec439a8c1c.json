@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE messages SET delivered_at = COALESCE(delivered_at, ?), delivery_expires_at = ?,\n                    lease_fingerprint = ?, lease_label = ? WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "54afe855eb08abe9e60e76936e2d6000933d43493217adc42cf994ec439a8c1c"
+}

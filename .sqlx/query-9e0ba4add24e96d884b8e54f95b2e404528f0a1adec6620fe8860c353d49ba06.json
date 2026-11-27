@@ -1,0 +1,62 @@
+{
+  "db_name": "SQLite",
+  "query": "DELETE FROM webauthn_challenges WHERE id = ? AND kind = ? AND expires_at > ?\n         RETURNING state, enrollment_code_hash, notification_id, action_id",
+  "describe": {
+    "columns": [
+      {
+        "name": "state",
+        "ordinal": 0,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "webauthn_challenges",
+            "name": "state"
+          }
+        }
+      },
+      {
+        "name": "enrollment_code_hash",
+        "ordinal": 1,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "webauthn_challenges",
+            "name": "enrollment_code_hash"
+          }
+        }
+      },
+      {
+        "name": "notification_id",
+        "ordinal": 2,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "webauthn_challenges",
+            "name": "notification_id"
+          }
+        }
+      },
+      {
+        "name": "action_id",
+        "ordinal": 3,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "webauthn_challenges",
+            "name": "action_id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "9e0ba4add24e96d884b8e54f95b2e404528f0a1adec6620fe8860c353d49ba06"
+}

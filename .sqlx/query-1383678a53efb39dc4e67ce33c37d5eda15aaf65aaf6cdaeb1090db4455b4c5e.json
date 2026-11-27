@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "DELETE FROM passkeys WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "1383678a53efb39dc4e67ce33c37d5eda15aaf65aaf6cdaeb1090db4455b4c5e"
+}

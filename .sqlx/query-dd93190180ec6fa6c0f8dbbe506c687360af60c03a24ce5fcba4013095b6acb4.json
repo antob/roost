@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE channels SET key_hash = ?, claim_generation = ?, claimed_by_fingerprint = ?, claimed_by_label = ?,\n                claimed_at = ? WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 6
+    },
+    "nullable": []
+  },
+  "hash": "dd93190180ec6fa6c0f8dbbe506c687360af60c03a24ce5fcba4013095b6acb4"
+}

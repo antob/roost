@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET title = ?, subtitle = ?, body = ?, body_markdown = ?, template_kind = ?,\n                        profile = ?, urgency = ?, actions = ?, custom_actions = ?, url = ?, copy = ?, thread_id = ?,\n                        collapse_key = ?, action_data = ?, reply_to = ?, mirror_reply = ?, sent_note = ?,\n                        event_at = ?, deliver_at = ?, status = ?, next_fire_at = ?, escalation_state = ?,\n                        escalate_after_secs = ?, after_cid = ?, remind_at = ? WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 26
+    },
+    "nullable": []
+  },
+  "hash": "58a50600659970305d1354918ff75544bbda8cb31365bb81a237f8cbc29434a8"
+}

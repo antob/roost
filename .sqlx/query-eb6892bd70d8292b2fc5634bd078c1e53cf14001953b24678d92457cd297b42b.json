@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE channels SET claimed_by_fingerprint = COALESCE(?, claimed_by_fingerprint),\n                claimed_by_label = COALESCE(?, claimed_by_label), claimed_at = ?, claim_generation = ? WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "eb6892bd70d8292b2fc5634bd078c1e53cf14001953b24678d92457cd297b42b"
+}

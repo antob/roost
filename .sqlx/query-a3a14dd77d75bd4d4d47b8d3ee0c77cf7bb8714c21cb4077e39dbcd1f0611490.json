@@ -1,0 +1,170 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT id as \"id!\", name, icon, color, claim_generation, claimed_by_label, claimed_by_fingerprint,\n                  claimed_at, operating_contract, notify_contract, default_profile, max_urgency,\n                  escalate_after_secs\n           FROM channels WHERE id = ?",
+  "describe": {
+    "columns": [
+      {
+        "name": "id!",
+        "ordinal": 0,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "name": "name",
+        "ordinal": 1,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "name"
+          }
+        }
+      },
+      {
+        "name": "icon",
+        "ordinal": 2,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "icon"
+          }
+        }
+      },
+      {
+        "name": "color",
+        "ordinal": 3,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "color"
+          }
+        }
+      },
+      {
+        "name": "claim_generation",
+        "ordinal": 4,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "claim_generation"
+          }
+        }
+      },
+      {
+        "name": "claimed_by_label",
+        "ordinal": 5,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "claimed_by_label"
+          }
+        }
+      },
+      {
+        "name": "claimed_by_fingerprint",
+        "ordinal": 6,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "claimed_by_fingerprint"
+          }
+        }
+      },
+      {
+        "name": "claimed_at",
+        "ordinal": 7,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "claimed_at"
+          }
+        }
+      },
+      {
+        "name": "operating_contract",
+        "ordinal": 8,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "operating_contract"
+          }
+        }
+      },
+      {
+        "name": "notify_contract",
+        "ordinal": 9,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "notify_contract"
+          }
+        }
+      },
+      {
+        "name": "default_profile",
+        "ordinal": 10,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "default_profile"
+          }
+        }
+      },
+      {
+        "name": "max_urgency",
+        "ordinal": 11,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "max_urgency"
+          }
+        }
+      },
+      {
+        "name": "escalate_after_secs",
+        "ordinal": 12,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "channels",
+            "name": "escalate_after_secs"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "a3a14dd77d75bd4d4d47b8d3ee0c77cf7bb8714c21cb4077e39dbcd1f0611490"
+}

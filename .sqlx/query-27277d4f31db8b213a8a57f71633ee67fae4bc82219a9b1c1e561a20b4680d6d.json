@@ -1,0 +1,470 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT id as \"id!\", channel_id, correlation_id, title, subtitle, body, body_markdown, template_kind,\n                      profile, urgency, actions, custom_actions, url, copy, thread_id, collapse_key, action_data,\n                      reply_to, mirror_reply as \"mirror_reply: bool\", sent_note, sent_by_label, event_at, deliver_at,\n                      status, delivered_at, seen_at, responded_at, chosen_action, reply_delivered_at, reply_message_id,\n                      created_at, next_fire_at, fired_at, escalation_state, escalation_fires_at, escalate_after_secs,\n                      after_cid, remind_at\n               FROM notifications WHERE id = ?",
+  "describe": {
+    "columns": [
+      {
+        "name": "id!",
+        "ordinal": 0,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "id"
+          }
+        }
+      },
+      {
+        "name": "channel_id",
+        "ordinal": 1,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "channel_id"
+          }
+        }
+      },
+      {
+        "name": "correlation_id",
+        "ordinal": 2,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "correlation_id"
+          }
+        }
+      },
+      {
+        "name": "title",
+        "ordinal": 3,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "title"
+          }
+        }
+      },
+      {
+        "name": "subtitle",
+        "ordinal": 4,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "subtitle"
+          }
+        }
+      },
+      {
+        "name": "body",
+        "ordinal": 5,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "body"
+          }
+        }
+      },
+      {
+        "name": "body_markdown",
+        "ordinal": 6,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "body_markdown"
+          }
+        }
+      },
+      {
+        "name": "template_kind",
+        "ordinal": 7,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "template_kind"
+          }
+        }
+      },
+      {
+        "name": "profile",
+        "ordinal": 8,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "profile"
+          }
+        }
+      },
+      {
+        "name": "urgency",
+        "ordinal": 9,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "urgency"
+          }
+        }
+      },
+      {
+        "name": "actions",
+        "ordinal": 10,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "actions"
+          }
+        }
+      },
+      {
+        "name": "custom_actions",
+        "ordinal": 11,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "custom_actions"
+          }
+        }
+      },
+      {
+        "name": "url",
+        "ordinal": 12,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "url"
+          }
+        }
+      },
+      {
+        "name": "copy",
+        "ordinal": 13,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "copy"
+          }
+        }
+      },
+      {
+        "name": "thread_id",
+        "ordinal": 14,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "thread_id"
+          }
+        }
+      },
+      {
+        "name": "collapse_key",
+        "ordinal": 15,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "collapse_key"
+          }
+        }
+      },
+      {
+        "name": "action_data",
+        "ordinal": 16,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "action_data"
+          }
+        }
+      },
+      {
+        "name": "reply_to",
+        "ordinal": 17,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "reply_to"
+          }
+        }
+      },
+      {
+        "name": "mirror_reply: bool",
+        "ordinal": 18,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "mirror_reply"
+          }
+        }
+      },
+      {
+        "name": "sent_note",
+        "ordinal": 19,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "sent_note"
+          }
+        }
+      },
+      {
+        "name": "sent_by_label",
+        "ordinal": 20,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "sent_by_label"
+          }
+        }
+      },
+      {
+        "name": "event_at",
+        "ordinal": 21,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "event_at"
+          }
+        }
+      },
+      {
+        "name": "deliver_at",
+        "ordinal": 22,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "deliver_at"
+          }
+        }
+      },
+      {
+        "name": "status",
+        "ordinal": 23,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "status"
+          }
+        }
+      },
+      {
+        "name": "delivered_at",
+        "ordinal": 24,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "delivered_at"
+          }
+        }
+      },
+      {
+        "name": "seen_at",
+        "ordinal": 25,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "seen_at"
+          }
+        }
+      },
+      {
+        "name": "responded_at",
+        "ordinal": 26,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "responded_at"
+          }
+        }
+      },
+      {
+        "name": "chosen_action",
+        "ordinal": 27,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "chosen_action"
+          }
+        }
+      },
+      {
+        "name": "reply_delivered_at",
+        "ordinal": 28,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "reply_delivered_at"
+          }
+        }
+      },
+      {
+        "name": "reply_message_id",
+        "ordinal": 29,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "reply_message_id"
+          }
+        }
+      },
+      {
+        "name": "created_at",
+        "ordinal": 30,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "created_at"
+          }
+        }
+      },
+      {
+        "name": "next_fire_at",
+        "ordinal": 31,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "next_fire_at"
+          }
+        }
+      },
+      {
+        "name": "fired_at",
+        "ordinal": 32,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "fired_at"
+          }
+        }
+      },
+      {
+        "name": "escalation_state",
+        "ordinal": 33,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "escalation_state"
+          }
+        }
+      },
+      {
+        "name": "escalation_fires_at",
+        "ordinal": 34,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "escalation_fires_at"
+          }
+        }
+      },
+      {
+        "name": "escalate_after_secs",
+        "ordinal": 35,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "escalate_after_secs"
+          }
+        }
+      },
+      {
+        "name": "after_cid",
+        "ordinal": 36,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "after_cid"
+          }
+        }
+      },
+      {
+        "name": "remind_at",
+        "ordinal": 37,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "remind_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "27277d4f31db8b213a8a57f71633ee67fae4bc82219a9b1c1e561a20b4680d6d"
+}

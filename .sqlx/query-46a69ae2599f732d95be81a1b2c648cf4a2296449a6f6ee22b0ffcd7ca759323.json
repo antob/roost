@@ -1,0 +1,26 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO messages (channel_id, kind, body, thread_id, correlation_id, ref, action_id, text, created_at)\n               VALUES (?, 'notification_reply', ?, ?, ?, ?, ?, ?, ?) RETURNING id as \"id!\"",
+  "describe": {
+    "columns": [
+      {
+        "name": "id!",
+        "ordinal": 0,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "messages",
+            "name": "id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 8
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "46a69ae2599f732d95be81a1b2c648cf4a2296449a6f6ee22b0ffcd7ca759323"
+}

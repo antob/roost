@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE claim_codes SET exchanged_at = ?, exchanged_fingerprint = ? WHERE code = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "8dd1a3d51905e9f4dc06c023d5c38f9edbbd2b51ba62d711034e2177a3095982"
+}

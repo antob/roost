@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET reply_delivered_at = COALESCE(reply_delivered_at, ?)\n             WHERE channel_id = ? AND correlation_id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "d3092af0765632c2c97465a63d62d463f00a26daef57b8f691e1da2934361941"
+}

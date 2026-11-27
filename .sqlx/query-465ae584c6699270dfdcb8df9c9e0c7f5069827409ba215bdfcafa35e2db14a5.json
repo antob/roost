@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE messages SET processed_at = ?, delivered_at = COALESCE(delivered_at, ?), acked_by_label = ?,\n                        handler_summary = ? WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "465ae584c6699270dfdcb8df9c9e0c7f5069827409ba215bdfcafa35e2db14a5"
+}

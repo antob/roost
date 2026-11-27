@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO enrollment_codes (code_hash, expires_at) VALUES (?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "1a71109f983feffc7bbc156c0743015c6b1f03e73154de3acd01da5014e584ce"
+}

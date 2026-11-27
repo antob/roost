@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE channels SET operating_contract = ? WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "af2efc8780e61e8b0ccd0b9bb1eaf292b74a9d85d88ca6744b29c5c2bc6d44e3"
+}

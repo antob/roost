@@ -1,0 +1,26 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT code_hash as \"code_hash!\" FROM enrollment_codes WHERE code_hash = ? AND used_at IS NULL AND expires_at > ?",
+  "describe": {
+    "columns": [
+      {
+        "name": "code_hash!",
+        "ordinal": 0,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "enrollment_codes",
+            "name": "code_hash"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      true
+    ]
+  },
+  "hash": "99a3d66baaad03009e891c3d11d8c3cdcedb3a0cef6cff54fadff8c7da0b99c8"
+}

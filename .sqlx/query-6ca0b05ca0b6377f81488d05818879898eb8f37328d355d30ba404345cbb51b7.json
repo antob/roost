@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO notifications (channel_id, correlation_id, title, subtitle, body, body_markdown,\n                        template_kind, profile, urgency, actions, custom_actions, url, copy, thread_id, collapse_key,\n                        action_data, reply_to, mirror_reply, sent_note, sent_by_label, event_at, deliver_at, status,\n                        created_at, next_fire_at, escalation_state, escalate_after_secs, after_cid, remind_at)\n                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 29
+    },
+    "nullable": []
+  },
+  "hash": "6ca0b05ca0b6377f81488d05818879898eb8f37328d355d30ba404345cbb51b7"
+}

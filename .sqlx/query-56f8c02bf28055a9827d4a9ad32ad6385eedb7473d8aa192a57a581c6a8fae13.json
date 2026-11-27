@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET status = ?, next_fire_at = ? WHERE id = ? AND status = 'queued'",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "56f8c02bf28055a9827d4a9ad32ad6385eedb7473d8aa192a57a581c6a8fae13"
+}

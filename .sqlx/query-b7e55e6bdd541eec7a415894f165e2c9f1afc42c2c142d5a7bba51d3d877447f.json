@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE channels SET name = ?, color = ?, icon = ?, max_urgency = ?, escalate_after_secs = ?,\n                default_profile = ? WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 7
+    },
+    "nullable": []
+  },
+  "hash": "b7e55e6bdd541eec7a415894f165e2c9f1afc42c2c142d5a7bba51d3d877447f"
+}

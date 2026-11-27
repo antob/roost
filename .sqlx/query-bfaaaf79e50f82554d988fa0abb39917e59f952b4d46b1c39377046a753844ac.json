@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE push_subscriptions SET last_failure_at = ?, failures = failures + 1 WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "bfaaaf79e50f82554d988fa0abb39917e59f952b4d46b1c39377046a753844ac"
+}

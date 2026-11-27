@@ -1,0 +1,26 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET delivered_at = ? WHERE id = ? AND delivered_at IS NULL RETURNING channel_id",
+  "describe": {
+    "columns": [
+      {
+        "name": "channel_id",
+        "ordinal": 0,
+        "type_info": "Integer",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "channel_id"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "4b95a4b6dfd8efdbab12b72575b8734fd1292ae3484b76c22f7b2bdb09a03b1a"
+}

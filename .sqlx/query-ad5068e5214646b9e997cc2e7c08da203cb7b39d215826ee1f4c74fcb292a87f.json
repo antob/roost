@@ -1,0 +1,50 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT ref, delivered_at, processed_at FROM messages WHERE id = ? AND channel_id = ? AND kind = 'system'",
+  "describe": {
+    "columns": [
+      {
+        "name": "ref",
+        "ordinal": 0,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "messages",
+            "name": "ref"
+          }
+        }
+      },
+      {
+        "name": "delivered_at",
+        "ordinal": 1,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "messages",
+            "name": "delivered_at"
+          }
+        }
+      },
+      {
+        "name": "processed_at",
+        "ordinal": 2,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "messages",
+            "name": "processed_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "ad5068e5214646b9e997cc2e7c08da203cb7b39d215826ee1f4c74fcb292a87f"
+}

@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO webauthn_challenges (id, kind, state, enrollment_code_hash, notification_id, action_id, expires_at)\n         VALUES (?, ?, ?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 7
+    },
+    "nullable": []
+  },
+  "hash": "aa8a9cb6b76645a02bae7a84fc89e9983cc11c89ecc6bc91ed37142ef2d45ed2"
+}

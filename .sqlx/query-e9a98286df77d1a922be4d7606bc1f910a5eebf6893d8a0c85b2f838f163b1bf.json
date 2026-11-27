@@ -1,0 +1,38 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT title, created_at FROM notifications WHERE channel_id = ? AND status != 'cancelled'\n                 ORDER BY id DESC LIMIT 1",
+  "describe": {
+    "columns": [
+      {
+        "name": "title",
+        "ordinal": 0,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "title"
+          }
+        }
+      },
+      {
+        "name": "created_at",
+        "ordinal": 1,
+        "type_info": "Text",
+        "origin": {
+          "Table": {
+            "table": "notifications",
+            "name": "created_at"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "e9a98286df77d1a922be4d7606bc1f910a5eebf6893d8a0c85b2f838f163b1bf"
+}

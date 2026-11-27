@@ -1,0 +1,35 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT COUNT(*) as \"total!: i64\",\n                  COALESCE(SUM(responded_at IS NOT NULL), 0) as \"answered!: i64\",\n                  COALESCE(SUM(responded_at IS NULL AND status NOT IN ('cancelled')), 0) as \"open!: i64\"\n           FROM notifications WHERE channel_id = ?",
+  "describe": {
+    "columns": [
+      {
+        "name": "total!: i64",
+        "ordinal": 0,
+        "type_info": "Integer",
+        "origin": "Expression"
+      },
+      {
+        "name": "answered!: i64",
+        "ordinal": 1,
+        "type_info": "Integer",
+        "origin": "Expression"
+      },
+      {
+        "name": "open!: i64",
+        "ordinal": 2,
+        "type_info": "Integer",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "13d576585254921a7820875e4e06c101801a49c7fe32b50c9b26d5161c5adf18"
+}

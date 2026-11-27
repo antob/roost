@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET fired_at = ?,\n                escalation_state = CASE WHEN ? THEN 'armed' ELSE escalation_state END,\n                escalation_fires_at = COALESCE(?, escalation_fires_at),\n                next_fire_at = ?\n         WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "b21f0a754a3ba58f09ad482e9db0f8944c6277e235e7a2ea8118b06409c68e3f"
+}

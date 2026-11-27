@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET escalation_state = 'fired' WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "0fae7a21eb92b93283f99162bf86d0c45a4b1297015a33d2993b0a754ecc3f4c"
+}

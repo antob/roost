@@ -1,0 +1,42 @@
+[package]
+name = "roost"
+version = "0.1.0"
+edition = "2024"
+description = "Self-hosted two-way agent ↔ iPhone messenger: server, PWA and agent CLI in one binary"
+license = "MIT"
+repository = "https://github.com/antob/roost"
+
+[dependencies]
+anyhow = "1.0.105"
+axum = "0.8.9"
+axum-extra = { version = "0.12.6", features = ["cookie"] }
+base64 = "0.23.1"
+chrono = { version = "0.4.45", features = ["serde"] }
+clap = { version = "4.6.10", features = ["derive", "env"] }
+futures-util = "0.3.34"
+hex = "0.4.3"
+hmac = "0.13.0"
+nix = { version = "0.32.0", features = ["hostname", "user", "signal", "process", "fs"] }
+openssl = "0.10.82"
+percent-encoding = "2.3.2"
+reqwest = "0.13.5"
+rust-embed = { version = "8", features = ["mime-guess"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.154", features = ["preserve_order"] }
+sha2 = "0.11.2"
+sqlx = { version = "0.9.1", default-features = false, features = ["runtime-tokio", "sqlite", "migrate", "macros", "json", "chrono"] }
+thiserror = "2.0.21"
+tokio = { version = "1.54.1", features = ["full"] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+url = "2.5.9"
+uuid = { version = "1.29.3", features = ["v4"] }
+web-push = { version = "0.11", default-features = false }
+webauthn-rs = { version = "0.6", features = ["danger-allow-state-serialisation"] }
+
+[dev-dependencies]
+chrono = "0.4.45"
+ece = "2"
+reqwest = { version = "0.13.5", features = ["json"] }
+tempfile = "3.27.0"
+webauthn-authenticator-rs = { version = "0.6", features = ["softpasskey"] }

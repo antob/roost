@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET status = 'pending', next_fire_at = NULL\n                 WHERE id = ? AND status = ? AND next_fire_at = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "52077c777937a407c85f1b34dc378a4c0fbac81355edfdc2bd362597b990cd3b"
+}

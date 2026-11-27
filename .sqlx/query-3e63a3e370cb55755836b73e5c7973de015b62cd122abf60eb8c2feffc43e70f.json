@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET status = 'cancelled', next_fire_at = NULL WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "3e63a3e370cb55755836b73e5c7973de015b62cd122abf60eb8c2feffc43e70f"
+}

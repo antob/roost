@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE enrollment_codes SET used_at = ? WHERE code_hash = ? AND used_at IS NULL AND expires_at > ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "c175e08f949689191984a1ea5134ecd80290406f787e583a11c2541d44bba502"
+}

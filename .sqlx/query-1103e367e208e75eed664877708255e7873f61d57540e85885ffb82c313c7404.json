@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE notifications SET next_fire_at = NULL WHERE id = ? AND next_fire_at = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "1103e367e208e75eed664877708255e7873f61d57540e85885ffb82c313c7404"
+}

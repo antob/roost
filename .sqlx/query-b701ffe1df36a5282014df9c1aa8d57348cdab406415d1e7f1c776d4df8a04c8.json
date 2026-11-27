@@ -1,0 +1,21 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT EXISTS (SELECT 1 FROM messages WHERE channel_id = ? AND kind = 'message' AND processed_at IS NULL\n                  AND (delivery_expires_at IS NULL OR delivery_expires_at <= ?)) as \"found!: bool\"",
+  "describe": {
+    "columns": [
+      {
+        "name": "found!: bool",
+        "ordinal": 0,
+        "type_info": "Integer",
+        "origin": "Expression"
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "b701ffe1df36a5282014df9c1aa8d57348cdab406415d1e7f1c776d4df8a04c8"
+}
