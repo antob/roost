@@ -564,6 +564,48 @@ async fn no_push_for_the_channel_the_owner_is_viewing() {
 }
 
 #[tokio::test]
+async fn no_push_while_the_owner_watches_home() {
+    let r = Roost::start().await;
+    let push = FakePushService::start().await;
+    push.subscribe(&r, "phone").await;
+    r.setup().await;
+    let viewing = |body: Value| {
+        r.http
+            .post(format!("{}/api/human/viewing", r.base))
+            .bearer_auth(common::ADMIN)
+            .json(&body)
+            .send()
+    };
+
+    let home = viewing(json!({ "channel_id": null, "home": true }))
+        .await
+        .unwrap();
+    assert!(home.status().is_success());
+    assert!(
+        r.run(&["important", "--title", "On Home"])
+            .await
+            .status
+            .success()
+    );
+    tokio::time::sleep(Duration::from_millis(500)).await;
+    assert!(
+        push.received.lock().unwrap().is_empty(),
+        "Home shows every channel's new items live"
+    );
+
+    let settings = viewing(json!({ "channel_id": null })).await.unwrap();
+    assert!(settings.status().is_success());
+    assert!(
+        r.run(&["important", "--title", "On Settings"])
+            .await
+            .status
+            .success()
+    );
+    let (_, payload) = push.nth("phone", 0).await;
+    assert_eq!(payload["title"], "On Settings");
+}
+
+#[tokio::test]
 async fn deleting_a_channel_removes_its_data_and_revokes_the_key() {
     let r = Roost::start().await;
     r.setup().await;

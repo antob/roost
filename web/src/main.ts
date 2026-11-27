@@ -425,6 +425,7 @@ async function homeView(params: URLSearchParams) {
     earlier && rest.length ? h("ul", { class: "feed" }, ...rest.map((n) => feedRow(n, refresh))) : null,
   );
   live = { refresh, channel: null };
+  reportViewing(filter ?? "home");
 }
 
 // ---------- item ----------
@@ -834,15 +835,15 @@ async function settingsView() {
 
 // ---------- live updates ----------
 
-let viewing: number | null = null;
+let viewing: number | "home" | null = null;
 
-/// Tells the server which channel is on screen, so it can skip pushes for it while the owner watches.
-function reportViewing(channel: number | null, beacon = false) {
+/// Tells the server which channel is on screen, or Home (every channel), so it can skip pushes the owner sees arrive.
+function reportViewing(channel: number | "home" | null, beacon = false) {
   if (!session?.authenticated) return;
   const changed = channel !== viewing;
   viewing = channel;
   if (!changed && channel === null && !beacon) return;
-  const body = JSON.stringify({ channel_id: channel });
+  const body = JSON.stringify(channel === "home" ? { channel_id: null, home: true } : { channel_id: channel });
   // iOS drops either one now and then while backgrounding a home-screen app, so "away" sends both.
   if (beacon && navigator.sendBeacon) navigator.sendBeacon("/api/human/viewing", new Blob([body], { type: "application/json" }));
   fetch("/api/human/viewing", { method: "POST", headers: { "Content-Type": "application/json" }, body, credentials: "same-origin", keepalive: true }).catch(() => {});

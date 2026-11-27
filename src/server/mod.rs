@@ -80,10 +80,17 @@ pub struct Inner {
     pub webauthn: Option<webauthn_rs::Webauthn>,
     pub vapid: push::Vapid,
     pub presence: presence::Presence,
-    /// The channel whose conversation or item the owner has open in the PWA, and when that was last confirmed.
-    pub owner_view: std::sync::Mutex<Option<(i64, std::time::Instant)>>,
+    /// What the owner has open in the PWA, and when that was last confirmed.
+    pub owner_view: std::sync::Mutex<Option<(OwnerView, std::time::Instant)>>,
     /// Until when each channel's agent shows the typing dots.
     pub typing: std::sync::Mutex<std::collections::HashMap<i64, chrono::DateTime<chrono::Utc>>>,
+}
+
+/// Home lists every channel's new items, so it counts as viewing them all.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum OwnerView {
+    Home,
+    Channel(i64),
 }
 
 #[derive(Clone)]
@@ -122,9 +129,16 @@ impl AppState {
         })))
     }
 
-    /// True while the owner is looking at this channel in the PWA (confirmed within the last 12 s).
+    /// True while the owner sees this channel's new items arrive in the PWA (confirmed within the last 12 s).
     pub fn owner_viewing(&self, channel_id: i64) -> bool {
-        matches!(*self.owner_view.lock().unwrap(), Some((c, at)) if c == channel_id && at.elapsed() < std::time::Duration::from_secs(12))
+        matches!(
+            *self.owner_view.lock().unwrap(),
+            Some((view, at)) if at.elapsed() < std::time::Duration::from_secs(12)
+                && match view {
+                    OwnerView::Home => true,
+                    OwnerView::Channel(c) => c == channel_id,
+                }
+        )
     }
 
     pub fn start_typing(&self, channel_id: i64, secs: i64) -> String {

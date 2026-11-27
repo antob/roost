@@ -15,7 +15,7 @@ use crate::server::error::{AppError, AppResult};
 use crate::server::owner::{self, Challenge, Human};
 use crate::server::routes::human::is_biometric;
 use crate::server::routes::notifications::{Notification, load_by_id};
-use crate::server::{AppState, EventKind, channels, push};
+use crate::server::{AppState, EventKind, OwnerView, channels, push};
 use crate::util::now;
 
 fn user_agent(headers: &HeaderMap) -> Option<&str> {
@@ -537,14 +537,21 @@ pub async fn events(
 #[derive(Deserialize)]
 pub struct Viewing {
     channel_id: Option<i64>,
+    #[serde(default)]
+    home: bool,
 }
 
-/// The PWA reports which channel is on screen so pushes for it can be skipped while the owner watches.
+/// The PWA reports which channel is on screen, or Home, so pushes it already shows can be skipped.
 pub async fn viewing(
     State(st): State<AppState>,
     _: Human,
     Json(body): Json<Viewing>,
 ) -> StatusCode {
-    *st.owner_view.lock().unwrap() = body.channel_id.map(|c| (c, std::time::Instant::now()));
+    let view = match body.channel_id {
+        Some(c) => Some(OwnerView::Channel(c)),
+        None if body.home => Some(OwnerView::Home),
+        None => None,
+    };
+    *st.owner_view.lock().unwrap() = view.map(|v| (v, std::time::Instant::now()));
     StatusCode::NO_CONTENT
 }

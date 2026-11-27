@@ -137,7 +137,7 @@ Passkeys are WebAuthn with user verification required (webauthn-rs passkey flows
 | `GET /feed[?all=true]` | open items (or everything), newest first, with `channel_name`, `open`, `action_specs[].biometric`. Open = not answered, cancelled or queued; a plain message only until seen; not superseded by a newer one with its collapse key |
 | `GET /badge` | `{open}`: the count of open feed items, for the app icon badge |
 | `GET /notifications/:id` | one item |
-| `POST /viewing` `{channel_id \| null}` | which channel's conversation or item is on screen; refreshed every 5 s while visible, cleared on hide (beacon plus keepalive fetch, since iOS drops either now and then), expires after 12 s. New and re-fired notifications on that channel skip the push and count as delivered (escalations still push) |
+| `POST /viewing` `{channel_id \| null, home?}` | which channel's conversation or item is on screen, or `home: true` (with `channel_id: null`) for Home showing every channel; refreshed every 5 s while visible, cleared on hide (beacon plus keepalive fetch, since iOS drops either now and then), expires after 12 s. New and re-fired notifications on that channel (on any channel, for Home) skip the push and count as delivered (escalations still push) |
 | `POST /notifications/:id/seen` · `/delivered` | receipts (the PWA on open, the service worker on push); they wake waiting long-polls |
 | `POST /notifications/:id/gate` `{action_id}` | open a Face ID gate |
 | `POST /notifications/:id/respond` `{action_id, text?, snooze_minutes?, gate?}` | answer |
