@@ -287,15 +287,19 @@ function snoozeSheet(item: Item, after: () => void) {
   );
 }
 
-/// The compact inline actions of a feed row or conversation card.
-function inlineActions(item: Item, after: () => void) {
-  if (isClosed(item) || item.status === "scheduled" || item.status === "queued") return null;
+const actionable = (item: Item) => !isClosed(item) && item.status !== "scheduled" && item.status !== "queued";
+
+/// Done without opening: never past a Face ID gate, and a plain message only while it's still on Home (unseen).
+const canDone = (item: Item) => actionable(item) && !primarySpecs(item).some((s) => s.biometric) && (item.profile !== "message" || item.open);
+
+/// The compact inline actions of a feed row or conversation card. Feed rows swipe for Done and Snooze, so they skip those buttons.
+function inlineActions(item: Item, after: () => void, swipes = false) {
+  if (!actionable(item)) return null;
   const specs = primarySpecs(item);
-  const gated = specs.some((s) => s.biometric);
   const { color } = look(item.channel_id);
   const buttons: Node[] = [];
-  if (!gated && item.profile !== "message" && !specs.some((s) => s.id === "done")) buttons.push(roundButton("check-circle", async () => (await answer(item, { id: "done", label: "Done" })) && after(), "Done"));
-  if (offersSnooze(item)) buttons.push(roundButton("snooze", () => snoozeSheet(item, after), "Snooze"));
+  if (!swipes && canDone(item) && !specs.some((s) => s.id === "done")) buttons.push(roundButton("check-circle", async () => (await answer(item, { id: "done", label: "Done" })) && after(), "Done"));
+  if (!swipes && offersSnooze(item)) buttons.push(roundButton("snooze", () => snoozeSheet(item, after), "Snooze"));
   if (specs.length > 0) buttons.push(roundButton("x", async () => (await answer(item, { id: "dismiss", label: "Dismiss" })) && after(), "Dismiss"));
   const first = specs[0];
   if (first) {
@@ -376,16 +380,79 @@ function loginView() {
 function feedRow(n: Item, refresh: () => void) {
   const { color, name } = look(n.channel_id);
   const state = stateLine(n);
-  return h(
-    "li",
-    { class: `feed-row${n.open ? "" : " dim"}`, onclick: () => nav(`/n/${n.id}`) },
+  const body = h(
+    "div",
+    { class: "swipe-body" },
     h("div", { class: "row-head" }, tile(n.channel_id, n.open && !n.seen_at), h("span", { class: "ch", style: { color } }, n.channel_name ?? name), h("span", { class: "time" }, when(n.created_at))),
     h("div", { class: "row-title" }, n.title),
     n.subtitle || n.body ? h("div", { class: "row-body" }, plain(n.subtitle ?? n.body)) : null,
     state ? h("div", { class: "row-state" }, state) : null,
     n.profile === "urgent" && n.open ? h("div", { class: "row-state urgent" }, "Urgent") : null,
-    inlineActions(n, refresh),
+    inlineActions(n, refresh, true),
   );
+  const row = h("li", { class: `feed-row${n.open ? "" : " dim"}` }, body);
+  const done = canDone(n);
+  const snooze = actionable(n) && offersSnooze(n);
+  if (done) row.prepend(h("div", { class: "swipe-bg done" }, icon("check-circle", 26)));
+  if (snooze) row.prepend(h("div", { class: "swipe-bg snooze" }, icon("snooze", 26)));
+  const swiped = swipeable(row, body, {
+    right: done ? async () => (await answer(n, { id: "done", label: "Done" })) && (refresh(), true) : undefined,
+    left: snooze ? () => (snoozeSheet(n, refresh), false) : undefined,
+    slideOut: "right",
+  });
+  row.addEventListener("click", () => swiped() || nav(`/n/${n.id}`));
+  return row;
+}
+
+/// Mail-style swipes on a row: left and right each run an action once dragged past a threshold.
+/// The `slideOut` side slides the row away while its action runs; a false result snaps it back.
+/// Returns a check the row's click handler uses to ignore the click that ends a swipe.
+function swipeable(row: HTMLElement, body: HTMLElement, acts: { left?: () => Promise<boolean> | boolean; right?: () => Promise<boolean> | boolean; slideOut?: "left" | "right" }) {
+  let x0 = 0, y0 = 0, dx = 0, mode: "idle" | "pending" | "drag" | "scroll" = "idle", justSwiped = false;
+  const threshold = () => Math.min(120, row.clientWidth * 0.3);
+  const set = (x: number, animate: boolean) => {
+    body.classList.toggle("dragging", !animate);
+    body.style.transform = x ? `translateX(${x}px)` : "";
+    row.classList.toggle("swiping-left", x < 0);
+    row.classList.toggle("swiping-right", x > 0);
+    row.classList.toggle("armed", Math.abs(x) >= threshold());
+  };
+  if (!acts.left && !acts.right) return () => false;
+  row.addEventListener("touchstart", (e) => {
+    const t = e.touches[0]!;
+    // The left edge belongs to the system's back gesture.
+    mode = e.touches.length === 1 && t.clientX > 24 ? "pending" : "idle";
+    x0 = t.clientX;
+    y0 = t.clientY;
+    dx = 0;
+  }, { passive: true });
+  row.addEventListener("touchmove", (e) => {
+    if (mode === "idle" || mode === "scroll") return;
+    const t = e.touches[0]!;
+    const mx = t.clientX - x0, my = t.clientY - y0;
+    if (mode === "pending") {
+      if (Math.abs(my) > 10 && Math.abs(my) > Math.abs(mx)) return void (mode = "scroll");
+      if (Math.abs(mx) < 10) return;
+      mode = "drag";
+    }
+    e.preventDefault();
+    dx = mx < 0 ? (acts.left ? mx : 0) : acts.right ? mx : 0;
+    set(dx, false);
+  }, { passive: false });
+  const end = async () => {
+    if (mode !== "drag") return void (mode = "idle");
+    mode = "idle";
+    justSwiped = true;
+    setTimeout(() => (justSwiped = false), 400);
+    const act = Math.abs(dx) >= threshold() ? (dx < 0 ? acts.left : acts.right) : undefined;
+    if (!act) return set(0, true);
+    const side = dx < 0 ? "left" : "right";
+    set(acts.slideOut === side ? Math.sign(dx) * row.clientWidth : 0, true);
+    if (!(await act())) set(0, true);
+  };
+  row.addEventListener("touchend", end);
+  row.addEventListener("touchcancel", () => ((dx = 0), end()));
+  return () => justSwiped;
 }
 
 async function homeView(params: URLSearchParams) {

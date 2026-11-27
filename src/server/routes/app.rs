@@ -279,10 +279,11 @@ fn app_json(n: &Notification, channel: Option<&String>) -> Value {
     v
 }
 
-/// On the owner's desk: not answered, not cancelled, not queued, and a plain message stops counting once seen.
+/// On the owner's desk: not answered, cancelled, queued or snoozed (it comes back when the snooze ends),
+/// and a plain message stops counting once seen.
 fn is_open(n: &Notification) -> bool {
     match n.status.as_str() {
-        "cancelled" | "responded" | "queued" => false,
+        "cancelled" | "responded" | "queued" | "snoozed" => false,
         _ if n.profile == "message" && n.action_specs().is_empty() => n.seen_at.is_none(),
         _ => true,
     }

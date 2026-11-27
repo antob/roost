@@ -81,7 +81,16 @@ h1.large { font-size: 2.6rem; font-weight: 750; letter-spacing: -0.02em; margin:
 .chip.active { background: var(--accent-soft); border-color: rgba(124, 92, 255, 0.5); color: #b9a8ff; }
 
 .feed { list-style: none; margin: 0; padding: 0; }
-.feed-row { padding: 1.1rem 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.feed-row { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); cursor: pointer; }
+.swipe-body { position: relative; padding: 1.1rem 0; background: var(--bg); transition: transform 0.22s ease; touch-action: pan-y; }
+.swipe-body.dragging { transition: none; }
+.swipe-bg { position: absolute; inset: 0.45rem 0; border-radius: var(--radius); display: none; align-items: center; padding: 0 1.4rem; color: #0e0f17; opacity: 0.55; transition: opacity 0.15s ease; }
+.swipe-bg svg { transition: transform 0.15s ease; }
+.swipe-bg.done { justify-content: flex-start; background: var(--ok); }
+.swipe-bg.snooze { justify-content: flex-end; background: var(--unread); }
+.feed-row.swiping-right .swipe-bg.done, .feed-row.swiping-left .swipe-bg.snooze { display: flex; }
+.feed-row.armed .swipe-bg { opacity: 1; }
+.feed-row.armed .swipe-bg svg { transform: scale(1.2); }
 .feed-row:last-child { border-bottom: 0; }
 .feed-row.dim { opacity: 0.55; }
 .row-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.55rem; }

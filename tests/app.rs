@@ -739,6 +739,52 @@ async fn a_collapse_key_replaces_the_previous_banner_and_feed_item() {
 }
 
 #[tokio::test]
+async fn a_snoozed_item_leaves_home_until_it_comes_back() {
+    let r = Roost::start().await;
+    r.setup().await;
+    let sent = r
+        .run(&["important", "--title", "Later", "--correlation-id", "s-1"])
+        .await;
+    assert!(sent.status.success());
+    let human = |path: &'static str| {
+        r.http
+            .get(format!("{}/api/human{path}", r.base))
+            .bearer_auth(common::ADMIN)
+            .send()
+    };
+    let on_home = || async {
+        let feed: Value = human("/feed").await.unwrap().json().await.unwrap();
+        let badge: Value = human("/badge").await.unwrap().json().await.unwrap();
+        (
+            feed["notifications"].as_array().unwrap().len(),
+            badge["open"].clone(),
+        )
+    };
+    assert_eq!(on_home().await, (1, json!(1)));
+
+    r.answer(
+        "s-1",
+        json!({ "action_id": "snooze", "snooze_minutes": 30 }),
+    )
+    .await;
+    assert_eq!(on_home().await, (0, json!(0)));
+    let all: Value = human("/feed?all=true").await.unwrap().json().await.unwrap();
+    let item = &all["notifications"][0];
+    assert_eq!(item["status"], "snoozed");
+    assert_eq!(item["open"], false);
+
+    sqlx::query("UPDATE notifications SET status = 'pending' WHERE correlation_id = 's-1'")
+        .execute(&r.db)
+        .await
+        .unwrap();
+    assert_eq!(
+        on_home().await,
+        (1, json!(1)),
+        "back on Home when the snooze ends"
+    );
+}
+
+#[tokio::test]
 async fn the_owner_sets_a_channels_look_and_urgency_ceiling() {
     let r = Roost::start().await;
     r.setup().await;
