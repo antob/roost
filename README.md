@@ -33,7 +33,66 @@ roost hello
 
 ## Development
 
-The dev shell comes from `flake.nix` (via direnv). `cargo test` runs the agent CLI against a live server, plus Web Push and passkey tests; `nix flake check` also boots a NixOS VM with the module. The wire protocol is documented in [docs/PROTOCOL.md](docs/PROTOCOL.md), and [AGENTS.md](AGENTS.md) has the conventions for working on the code.
+The dev shell comes from `flake.nix` (via direnv). The wire protocol is documented in [docs/PROTOCOL.md](docs/PROTOCOL.md), and [AGENTS.md](AGENTS.md) has the conventions for working on the code.
+
+### Tests
+
+Most changes can be checked without a phone:
+
+- `cargo test` runs the agent CLI against a live server (`tests/cli.rs`), plus Web Push against a fake push service and passkeys with a software authenticator (`tests/app.rs`).
+- `cargo clippy` and `cd web && bun run typecheck`.
+- `nix flake check` builds the package and boots a NixOS VM with the module.
+
+### A dev server for the phone
+
+To try a change on the iPhone, run a second server from the checkout next to your real one. It keeps its own database, so it has its own passkey, channels and push subscription, and nothing you do there touches the real install.
+
+```sh
+cd web && bun install && bun run build && cd ..
+cargo build
+target/debug/roost --db roost-dev.db serve --bind 0.0.0.0:8787 --base-url https://roost-dev.example.net
+```
+
+The phone needs HTTPS for passkeys and Web Push, so put the dev server behind a TLS reverse proxy (or tunnel) at the base URL. Then, once:
+
+1. `target/debug/roost --db roost-dev.db passkey enroll --base-url https://roost-dev.example.net`, open the link in Safari on the iPhone, create the passkey and add the page to the home screen. It's a separate app from your real roost, since it's a different site.
+2. In the dev app: Settings → Turn on notifications.
+3. `target/debug/roost --db roost-dev.db channel create Dev` prints a claim code (or use Channels → + in the app).
+
+After that:
+
+- Rust changes: `cargo build` and restart the server.
+- PWA changes: `cd web && bun run build`, then reload the app. Debug builds read `web/dist` from disk, so the server needn't restart.
+
+### Pointing an agent at the dev build
+
+The CLI keeps its keys under `$XDG_CONFIG_HOME/roost` (default `~/.config/roost`), and the installed Claude Code hook and Pi extension call `roost` from `PATH`. So a shell with the dev build first on `PATH` and its own config directory talks to the dev server, with the dev binary, and leaves your real keys alone:
+
+```sh
+mkdir -p ~/roost-try && cd ~/roost-try
+export PATH=~/path/to/roost/target/debug:$PATH XDG_CONFIG_HOME=$PWD/.roost
+roost setup --claim <code> --url https://roost-dev.example.net
+roost hello
+pi   # or claude: a global hook or extension now runs the dev build too
+```
+
+Keep the `PATH` prefix when you install: `roost hook install` writes `roost` by name when one is on `PATH`, so without it a project install would run your installed release instead of the dev build.
+
+If you change the Pi extension itself (`src/client/pi/roost.ts`), a global install still loads the old copy. Start Pi with an empty agent directory and install the extension into the project:
+
+```sh
+export PI_CODING_AGENT_DIR=$PWD/.pi-agent
+roost hook install --target pi
+pi
+```
+
+### Trying an unpushed build on a NixOS server
+
+The flake input can be overridden with the checkout for a single rebuild; the next normal rebuild goes back to the locked revision:
+
+```sh
+nixos-rebuild switch --flake .#<host> --override-input roost path:/path/to/roost
+```
 
 ## Acknowledgements
 
